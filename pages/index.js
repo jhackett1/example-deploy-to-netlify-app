@@ -1,3 +1,19 @@
-const Home = () => <h1>Foo</h1>
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient()
+
+export const getServerSideProps = async () => {
+  const posts = await prisma.post.findMany()
+  return {
+    props: { posts },
+  }
+}
+
+const Home = ({ posts }) => (
+  <>
+    <h1>Posts</h1>
+    <code>{JSON.stringify(posts)}</code>
+  </>
+)
 
 export default Home
